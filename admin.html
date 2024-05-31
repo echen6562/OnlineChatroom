@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        #error{
+            background-color: red;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #chat{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        body{
+            background:lightblue;
+            text-align: center;
+        }
+        #soom{
+            height: 25px;
+            width: auto;
+            display: inline;
+        }
+        h1{
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <script src="fetch_convenience_function.js"></script>
+
+    <div>
+        <img src="soom.png" id="soom">
+        <h1>Soom Admin Login Page</h1>
+      </div>
+    <div id="error" class="hidden">
+        Intruder alert!
+    </div>
+    <div id="form">
+        Username: <input type="text" id="username" name="name">
+        <br>
+        Password <input type="text" id="password" name="pass">
+    </div>
+    <button id='login'>Click to login!</button>
+    <select id="room" class="hidden">
+        <option value="1"> Chatroom 1 </option>
+        <option value="2"> Chatroom 2 </option>
+        <option value="3"> Chatroom 3 </option>
+        <option value="4"> Chatroom 4 </option>
+    </select>
+    <button id="clear" class="hidden">Clear contents</button>
+    <a href="index.php" id="chat">Back To Chatrooms</a>
+    <div id="logs" class="hidden">
+        <h2>Logs</h2>
+        <h4> ID | Username | Message | Chatroom | IP | Time<h4>
+    </div>
+
+
+
+    <script>
+        let username = document.getElementById('username');
+        let password = document.getElementById('password');
+        let form = document.getElementById('form');
+        let login = document.getElementById('login');
+        let error = document.getElementById('error');
+        let room = document.getElementById('room');
+        let clear = document.getElementById("clear");
+        let logs = document.getElementById('logs');
+
+        login.onclick = function(){
+            if(username.value == 'pikachu' && password.value == 'pokemon'){
+                error.classList.add('hidden');
+                form.classList.add('hidden');
+                login.classList.add('hidden');
+                room.classList.remove('hidden');
+                clear.classList.remove('hidden');
+                logs.classList.remove('hidden');
+                getLogs();
+            }
+            else{
+                error.classList.remove('hidden');
+                username.value = '';
+                password.value = '';
+            }
+        }
+
+        clear.onclick = function(){
+            performFetch({
+                url: 'api.php',
+                method: 'GET',
+                data: {
+                    room: parseInt(room.value),
+                    command: 'delete'
+                },
+                success: function(data) {
+                    console.log("GOOD!");
+                },
+                error: function(data) {
+
+                }
+            })
+        }
+        function getLogs(){
+            performFetch({
+                url: 'api.php',
+                method: 'GET',
+                data: {
+                    command: 'logs'
+                 },
+                success: function(data) {
+                    console.log("GOOD!");
+                    let goodData = JSON.parse(data);
+
+                    for (let i = 0; i < goodData.length; i++) {
+                        logs.innerHTML += (goodData[i] + "<br>");
+                    }
+                },
+                error: function(data) {
+
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>
