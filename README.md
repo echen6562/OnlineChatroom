@@ -2,6 +2,8 @@
 
 A real-time chat application that enables users to communicate seamlessly across multiple dynamic chat rooms. Developed with a focus on simplicity, flexibility, and efficient server management.
 
+![Soom Online Chatroom Screenshot](https://github.com/user-attachments/assets/bd5f2e58-b3aa-4ed1-97b5-f96220b86ef5)
+
 ## 🎯 What is Soom?
 
 Soom offers a friendly and interactive platform for users to join or switch between multiple chat rooms in real time. The application ensures a smooth messaging experience powered by the Fetch API and a lightweight SQLite3 database backend.
